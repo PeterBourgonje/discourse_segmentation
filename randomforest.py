@@ -252,6 +252,7 @@ if __name__ == '__main__':
     language = os.path.basename(options.trainconll)[:3]
     parsingFlag = False
     pname = None
+    plocation = None
 
     if language in ['deu', 'eng', 'spa', 'fra', 'zho'] and not options.noParsing:
         parsingFlag = True
@@ -294,7 +295,7 @@ if __name__ == '__main__':
     testmatrix = getFeatureMatrix(testtokens, parsingFlag)
 
     if parsingFlag: # re-pickle for next time
-        with codecs.open(pname, 'wb') as handle:
+        with codecs.open(plocation, 'wb') as handle:
             pickle.dump(pm, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     le = CustomLabelEncoder.CustomLabelEncoder()
