@@ -277,10 +277,11 @@ if __name__ == '__main__':
         elif language == 'zho':
             pname = 'chinese_sentences.pickle'
             lexParser = stanford.StanfordParser(model_path=config['lexparser']['chineseModel'])
-        if os.path.exists(os.path.join(os.getcwd(), pname)):
-            pm = pickle.load(codecs.open(pname, 'rb'))
+        plocation = os.path.join(os.path.join(os.getcwd(), 'picklejars'), pname)
+        if os.path.exists(plocation):
+            pm = pickle.load(codecs.open(plocation, 'rb'))
         else:
-            sys.stderr.write('INFO: Failed to find parse dictionary (%s), re-parsing, execution may take a while...\n' % os.path.join(os.getcwd(), pname))
+            sys.stderr.write('INFO: Failed to find parse dictionary (%s), re-parsing, execution may take a while...\n' % plocation)
         
 
     traintokens = CONLLParser.parse(options.trainconll)
