@@ -19,7 +19,7 @@ from keras.optimizers import RMSprop, Adam
 from keras.callbacks import EarlyStopping
 from keras.utils import to_categorical
 import keras.backend
-
+import configparser
 
 def getTokenIdDict(conlltokens):
 
@@ -232,7 +232,17 @@ def loadExternalEmbeddings(lang):
     starttime = time.time()
     sys.stderr.write('INFO: Loading external embeddings...\n')
     ed = defaultdict()
-    ud = {'deu':'/share/cc.de.300.vec', 'nld':'/share/cc.nl.300.vec', 'por':'/share/cc.pt.300.vec', 'spa':'/share/cc.es.300.vec', 'eng':'/share/cc.en.300.vec', 'rus':'/share/cc.ru.300.vec', 'fra':'/share/cc.fr.300.vec', 'zho':'/share/cc.zh.300.vec', 'eus':'/share/cc.ba.300.vec'} #TODO: move this to config.ini
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    ud = {'deu':config['embeddings']['deu'],
+          'nld':config['embeddings']['nld'],
+          'por':config['embeddings']['por'],
+          'spa':config['embeddings']['spa'],
+          'eng':config['embeddings']['eng'],
+          'rus':config['embeddings']['rus'],
+          'fra':config['embeddings']['fra'],
+          'zho':config['embeddings']['zho'],
+          'eus':config['embeddings']['eus']}
     with open(ud[lang], 'r') as f:
         for line in f.readlines():
             line = line.strip()
