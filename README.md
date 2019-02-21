@@ -23,6 +23,8 @@ For ``randomforest.py``, for the languages supported by the Stanford Lexicalized
 Then specify the paths accordingly in the config.ini file (the stanfordParser, stanfordModels and path properties) and make sure java (8) is installed.
 Note that obtaining the parse trees can take a while (up to several hours). For the non-proprietary corpora in the shared task, the parse trees for all sentences are stored in the picklejar folder and read from there, speeding up the process considerably.
 
-For ``lstm.py``, you have a choice of either using external/pre-trained embeddings, or get the embeddings from the corpus itself. Currently, external embeddings are used. Change the relevant lines in main to call ``intembs`` instead of ``extembs``, and comment out the line ``embd = loadExternalEmbeddings(language)`` to avoid loading external embeddings. The external embeddings can be downloaded from here: https://fasttext.cc/docs/en/crawl-vectors.html (the .vec files, i.e. cc.de.300.vec for German). 
-
+For ``lstm.py``, you have a choice of either using external/pre-trained embeddings, or get the embeddings from the corpus itself. Currently, external embeddings are used. These can be downloaded from here: https://fasttext.cc/docs/en/crawl-vectors.html (the .vec files, i.e. cc.de.300.vec for German). 
 Then specify the paths according in the config.ini file (the embeddings section).
+
+If you want to use corpus-internal embeddings instead, change the relevant lines in main to call ``intembs`` instead of ``extembs``, and comment out the line ``embd = loadExternalEmbeddings(language)``.
+
