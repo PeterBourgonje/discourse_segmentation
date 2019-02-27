@@ -10,7 +10,7 @@ The randomforest and lstm approaches perform the same task, but score different 
 
 ``randomforest.py`` trains and runs a randomforest classifier (predicts on the test set). Specify the paths to the train, dev and test file (train and dev are thrown together for training) with the ``--train``, ``--dev`` and ``--test`` options and the labels are predicted and written to a file suffixed .randomforest.predicted next to the original test file.
 
-``lstm.py`` trains and runs an lstm (predicts on the test set). Specify the paths to the train, dev and test file (train and dev are thrown together for training) with the ``--train``, ``--dev`` and ``--test`` options and the labels are predicted and written to a file suffixed .lstm_extembs.predicted next to the original test file.
+``lstm.py`` trains and runs an lstm (predicts on the test set). Specify the paths to the train, dev and test file (train and dev are thrown together for training) with the ``--train``, ``--dev`` and ``--test`` options. Additionally, specify a value for the ``--mode`` option, either ``int`` or ``ext``. If ``int`` is used, corpus-internal embeddings are used and the predicted labels are written to a file suffixed .lstm_intembs.predicted next to the original test file. If ``ext`` is used, pre-trained embeddings are used and the predicted labels are written to a file suffixed .lstm_extembs.predicted.
 
 Because the labels for the PDTB-style corpora in the shared task differ (``Seg=(B|I)-Conn`` instead of ``BeginSeg=Yes`` for all others), ``post_edit_pdtb_output.py`` modifies the labels accordingly. This script thus is only needed for PDTB-style corpora.
 
@@ -23,8 +23,5 @@ For ``randomforest.py``, for the languages supported by the Stanford Lexicalized
 Then specify the paths accordingly in the config.ini file (the stanfordParser, stanfordModels and path properties) and make sure java (8) is installed.
 Note that obtaining the parse trees can take a while (up to several hours). For the non-proprietary corpora in the shared task, the parse trees for all sentences are stored in the picklejar folder and read from there, speeding up the process considerably.
 
-For ``lstm.py``, you have a choice of either using external/pre-trained embeddings, or get the embeddings from the corpus itself. Currently, external embeddings are used. These can be downloaded from here: https://fasttext.cc/docs/en/crawl-vectors.html (the .vec files, i.e. cc.de.300.vec for German). 
+For ``lstm.py``, you have a choice of either using external/pre-trained embeddings, or get the embeddings from the corpus itself. The bevaviour can be controlled by the ``--mode`` (or ``-m``) option, which accepts either ``int`` or ``ext`` as a value. External embeddings can be downloaded from here: https://fasttext.cc/docs/en/crawl-vectors.html (the .vec files, i.e. cc.de.300.vec for German). 
 Then specify the paths according in the config.ini file (the embeddings section).
-
-If you want to use corpus-internal embeddings instead, change the relevant lines in main to call ``intembs`` (a few lines up) instead of ``extembs``, and comment out the line ``embd = loadExternalEmbeddings(language)``.
-
