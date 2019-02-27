@@ -418,11 +418,15 @@ if __name__ == '__main__':
     parser.add_option('--train', dest='trainconll', help='train file in CONLL format')
     parser.add_option('--dev', dest='devconll', help='dev file in CONLL format')
     parser.add_option('--test', dest='testconll', help='test file in CONLL format')
+    parser.add_option('--mode', '-m', dest='mode', help='specify either "int" for corpus-internal embeddings or "ext" for pre-trained embeddings (location specified in config.ini)')
     
     options, args = parser.parse_args()
 
     if not options.trainconll or not options.devconll or not options.testconll:
         parser.print_help(sys.stderr)
+        sys.exit(1)
+    if not options.mode or not options.mode in ['int', 'ext']:
+        sys.stderr.write('Please specify a mode, either "int" for corpus-internal embeddings or "ext" for pre-trained embeddings (location specified in config.ini)\n')
         sys.exit(1)
 
     language = os.path.basename(options.trainconll)[:3]
@@ -448,8 +452,17 @@ if __name__ == '__main__':
         labels = intembs(trainmatrix, testmatrix, headers, epochs)
         printConllOut(options.testconll, labels, i, 'lstm_intembs')
     """
+    """
     embd = loadExternalEmbeddings(language)
     #for i in range(10):
     i = 0
     labels = extembs(trainmatrix, testmatrix, headers, epochs, embd)
     printConllOut(options.testconll, labels, i, 'lstm_extembs')
+    """
+    if options.mode == 'int':
+        labels = intembs(trainmatrix, testmatrix, headers, epochs)
+        printConllOut(options.testconll, labels, 0, 'lstm_intembs')
+
+    elif options.mode == 'ext':
+        labels = extembs(trainmatrix, testmatrix, headers, epochs, embd)
+        printConllOut(options.testconll, labels, 0, 'lstm_extembs')
