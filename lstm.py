@@ -464,5 +464,6 @@ if __name__ == '__main__':
         printConllOut(options.testconll, labels, 0, 'lstm_intembs')
 
     elif options.mode == 'ext':
+        embd = loadExternalEmbeddings(language)
         labels = extembs(trainmatrix, testmatrix, headers, epochs, embd)
         printConllOut(options.testconll, labels, 0, 'lstm_extembs')
